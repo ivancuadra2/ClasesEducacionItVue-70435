@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="app" >
+        <div class="bg-teal-500">
+            <div class="text-xl"> {{ message }} </div>
+            <div>v-on:click o variable</div>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" v-on:click="message = 'Mensaje cambiado' + message"> Editar el mensaje </button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="count++"> Count : {{ count }} </button>
+            <div> Directiva V-IF </div>
+            <div v-if="count > 5">El contador es mayor a 5</div>
+            <div> Directiva V-SHOW </div>
+            <div v-show="count > 5" v-bind:class="miClase">El contador es mayor a 5</div>
+            
+            <div> Directiva V-FOR </div>            
+            <div :class="alumno.asistio ? 'm-1 border bg-blue-500' : 'm-1 border bg-red-500' " v-for="(alumno, index) in alumnos" v-on:click='alumnoSeleccionado = alumno'>
+                <div>
+                    Nombre: {{ alumno.nombre }} , Edad: {{ alumno.edad }} 
+                </div>
+                Indice : {{ index }}
+                <input type="checkbox" v-model="alumno.asistio"> 
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" 
+                @click="eliminarAlumno(index)">Eliminar</button>
+                <img :src="alumno.foto" width="50px"> 
+            </div>
+            <button @click="miClase = 'bg-red-500'">Cambiar clase</button>
+            <button @click="alumnoSeleccionado= ''">Borrar alumno</button>
+            <div v-if="!alumnoSeleccionado">No hay alumno selccionado</div>
+            <div v-else>Alumno Seleccionado: Nombre: {{ alumnoSeleccionado.nombre }} , Edad: {{ alumnoSeleccionado.edad }} </div>
+            <input type="text" v-model="nombre"> Input v-model Nombre </input>
+            <div>Nombre: {{ nombre }}</div>
+            <input type="number" v-model="edad" />
+            <div>Edad: {{ edad }}</div> 
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="nombre=''">Borrar nombre</button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Guardar Nombre</button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="alumnos[0].foto = '' ">Borrar foto</button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="agregarAlumno">Agregar nuevo alumno</button>
+
+        </div> 
+        {{ $data }}
+    </div>
+    <script>
+        const { createApp } = Vue
+        createApp({
+          methods: {
+            agregarAlumno() {
+              this.alumnos.push({
+                nombre: this.nombre,
+                edad: this.edad
+              })
+              this.nombre = ''
+              this.edad = ''
+            },
+            eliminarAlumno(index) {
+              this.alumnos = this.alumnos.filter((alumno, i) => i !== index)
+            }
+          },
+          data() {
+            return {
+              count:0,
+              message: 'Bienvenidos al Curso de Vuejs!',
+              alumnos: [
+                {
+                    nombre: 'Juan',
+                    edad: 20,
+                    asititio:false,
+                    foto:'https://www.un.org/pga/wp-content/uploads/sites/53/2018/09/Dummy-image-1.jpg'
+                },
+                {
+                    nombre: 'Pedro',
+                    edad: 25,
+                    asititio:false,
+                    foto:'https://www.un.org/pga/wp-content/uploads/sites/53/2018/09/Dummy-image-1.jpg'
+                },
+                {
+                    nombre: 'Maria',
+                    edad: 30,
+                    asititio:false,
+                    foto:'https://www.un.org/pga/wp-content/uploads/sites/53/2018/09/Dummy-image-1.jpg'
+                },
+            ],
+              nombre: '',
+              miClase:'bg-blue-500',
+
+              alumnoSeleccionado: ''
+            }
+          }
+        }).mount('#app')
+      </script>    
+</body>
+</html>

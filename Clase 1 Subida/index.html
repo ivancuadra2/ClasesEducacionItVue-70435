@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Clase 1 VueJS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div id="app">
+        <div class="container">
+            <div class="jumbotron mt-3">
+                
+                <h1>{{ mensaje }}</h1>
+                <br>
+
+                <h4>Interpolacion - v-text - v-html</h4>
+                {{ mensajeHTML }}
+                <div v-text="mensajeHTML"></div>
+                <div v-html="mensajeHTML"></div>
+                <br>
+
+                <h4>v-on:click / @click</h4>
+                <!-- <button class="btn btn-success" v-on:click="mostrar=!mostrar">{{ mostrar? 'Ocultar':'Mostrar'}}</button> -->
+                <button class="btn btn-success" @click="cambiarVistaTexto()">{{ mostrar? 'Ocultar':'Mostrar'}}</button>
+                <br><br>
+
+                <h4>v-if</h4>
+                <div v-if="mostrar" class="alert alert-warning">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente vitae qui inventore ratione asperiores suscipit, officiis unde ducimus voluptatibus nam cupiditate voluptates repudiandae fuga id? Eius numquam voluptatum necessitatibus amet!
+                </div>
+                <br>
+
+                <!-- ul>li{item$}*100 -->
+                <!-- <ul>
+                    <li>{{ usuarios[0] }}</li>
+                    <li>{{ usuarios[1] }}</li>
+                    <li>{{ usuarios[2] }}</li>
+                    <li>{{ usuarios[3] }}</li>
+                </ul> -->
+                <h4>v-for</h4>
+                <ul>
+                    <li v-for="(usuario, index) in usuarios">
+<!--                         {{ usuario }} {{ index }} -->
+                        {{ usuario.nombre }} {{ index }}
+                    </li>
+                </ul>
+
+                <div v-if="usuarios.length">
+                    <table class="table">
+                        <tr class="bg-success text-white">
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Edad</th>
+                            <th>Curso</th>
+                            <th>Foto</th>
+                        </tr>
+                        <tr v-for="usuario in usuarios">
+                            <th>{{ usuario.nombre }}</th>
+                            <th>{{ usuario.apellido }}</th>
+                            <th>{{ usuario.edad }}</th>
+                            <th>{{ usuario.curso? 'Asistió': 'No asistió' }}</th>
+                            <!-- <th><img v-bind:src="usuario.foto" height="50" alt=""></th> -->
+                            <th><img :src="usuario.foto" height="50" alt=""></th>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="media my-3" v-for="(usuario, index) in usuarios">
+                    <img :src="usuario.foto" height="150" alt="">
+                    <div class="media-body ml-3">
+                        <p><b>{{usuario.nombre}} {{usuario.apellido}}</b></p>
+                        <p><i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi obcaecati magni assumenda eligendi amet optio recusandae fugit earum, repudiandae commodi repellendus voluptates repellat nisi, nostrum nesciunt in, animi sint deleniti.</i></p>
+                        <p> Hizo el curso <input type="checkbox" v-model="usuario.curso">
+                        <button class="btn btn-danger mx-4" @click="borrarUsuario(index)">X</button></p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>            
+    </div>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
